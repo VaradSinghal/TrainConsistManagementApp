@@ -1,5 +1,5 @@
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
 public class TrainConsistManagementApp {
 
@@ -8,36 +8,41 @@ public class TrainConsistManagementApp {
         System.out.println("=== Train Consist Management App ===");
 
         // ============================================================
-        // UC5: Preserve insertion order and uniqueness using LinkedHashSet
+        // UC6: Mapping bogies to their seating/load capacity
         // ============================================================
 
-        System.out.println("\n=== UC5: Train Formation with LinkedHashSet ===");
+        System.out.println("\n=== UC6: Bogie to Capacity Mapping ===");
 
-        // Create LinkedHashSet to store train bogies
-        Set<String> trainFormation = new LinkedHashSet<>();
-
-        // ---------------------------
-        // Attach bogies to train
-        // ---------------------------
-        System.out.println("\nAttaching bogies to train...");
-
-        trainFormation.add("Engine");
-        trainFormation.add("Sleeper");
-        trainFormation.add("Cargo");
-        trainFormation.add("Guard");
-
-        // Attempt to add duplicate bogie
-        System.out.println("Attempting to attach duplicate bogie: Sleeper");
-        trainFormation.add("Sleeper");  // duplicate, ignored automatically
+        // Create HashMap to store bogie and capacity
+        Map<String, Integer> bogieCapacityMap = new HashMap<>();
 
         // ---------------------------
-        // Display final formation
+        // Insert bogie capacity data
         // ---------------------------
-        System.out.println("\nFinal Train Formation (Insertion Order Preserved):");
-        for (String bogie : trainFormation) {
-            System.out.println(bogie);
+        System.out.println("\nAdding bogie capacities...");
+
+        bogieCapacityMap.put("Sleeper", 72);
+        bogieCapacityMap.put("AC Chair", 54);
+        bogieCapacityMap.put("First Class", 24);
+
+        // ---------------------------
+        // Display bogie capacity data
+        // ---------------------------
+        System.out.println("\nBogie Capacity Details:");
+
+        for (Map.Entry<String, Integer> entry : bogieCapacityMap.entrySet()) {
+            System.out.println(
+                    "Bogie: " + entry.getKey() +
+                            " | Capacity: " + entry.getValue()
+            );
         }
 
-        System.out.println("\nTotal bogies in formation: " + trainFormation.size());
+        // ---------------------------
+        // Example lookup
+        // ---------------------------
+        System.out.println("\nCapacity lookup for Sleeper bogie:");
+        System.out.println("Sleeper capacity: " + bogieCapacityMap.get("Sleeper"));
+
+        System.out.println("\nProgram execution completed.");
     }
 }
