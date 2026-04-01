@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.LinkedList;
 
 public class TrainConsistManagementApp {
 
@@ -9,63 +10,51 @@ public class TrainConsistManagementApp {
 
         System.out.println("=== Train Consist Management App ===");
 
-        // ---------------------------
-        // UC2: Passenger Bogies using ArrayList
-        // ---------------------------
-        List<String> trainConsist = new ArrayList<>();
-
-        System.out.println("Train consist initialized.");
-        System.out.println("Initial number of bogies: " + trainConsist.size());
-
-        System.out.println("\nAdding passenger bogies...");
-
-        trainConsist.add("Sleeper");
-        trainConsist.add("AC Chair");
-        trainConsist.add("First Class");
-
-        System.out.println("Current Train Consist: " + trainConsist);
-
-        System.out.println("\nRemoving 'AC Chair' bogie...");
-        trainConsist.remove("AC Chair");
-
-        System.out.println("Train Consist after removal: " + trainConsist);
-
-        System.out.println("\nChecking if 'Sleeper' bogie exists...");
-
-        if (trainConsist.contains("Sleeper")) {
-            System.out.println("Sleeper bogie is present in the train.");
-        } else {
-            System.out.println("Sleeper bogie is NOT present in the train.");
-        }
-
-        System.out.println("\nFinal Train Consist: " + trainConsist);
-        System.out.println("Total number of bogies: " + trainConsist.size());
-
         // ============================================================
-        // UC3: Track Unique Bogie IDs using HashSet
+        // UC4: Ordered Train Consist using LinkedList
         // ============================================================
 
-        System.out.println("\n=== UC3: Tracking Unique Bogie IDs ===");
+        System.out.println("\n=== UC4: Maintaining Ordered Train Consist ===");
 
-        // Create HashSet to store unique bogie IDs
-        Set<String> bogieIds = new HashSet<>();
+        // Create LinkedList to represent train bogie order
+        LinkedList<String> train = new LinkedList<>();
 
-        System.out.println("\nAdding bogie IDs (including duplicates)...");
+        // ---------------------------
+        // Add bogies to train
+        // ---------------------------
+        train.add("Engine");
+        train.add("Sleeper");
+        train.add("AC");
+        train.add("Cargo");
+        train.add("Guard");
 
-        bogieIds.add("BG101");
-        bogieIds.add("BG102");
-        bogieIds.add("BG103");
-        bogieIds.add("BG101"); // duplicate
-        bogieIds.add("BG102"); // duplicate
+        System.out.println("Initial Train Consist:");
+        System.out.println(train);
 
-        // Display unique bogie IDs
-        System.out.println("\nUnique Bogie IDs in Train:");
-        for (String id : bogieIds) {
-            System.out.println(id);
+        // ---------------------------
+        // Insert Pantry Car at position 2
+        // ---------------------------
+        System.out.println("\nInserting Pantry Car at position 2...");
+        train.add(2, "Pantry");
+
+        System.out.println("Train after Pantry insertion:");
+        System.out.println(train);
+
+        // ---------------------------
+        // Remove first and last bogie
+        // ---------------------------
+        System.out.println("\nDetaching first and last bogies...");
+        train.removeFirst();
+        train.removeLast();
+
+        // ---------------------------
+        // Final Train Order
+        // ---------------------------
+        System.out.println("\nFinal Ordered Train Consist:");
+        for (String bogie : train) {
+            System.out.println(bogie);
         }
 
-        System.out.println("\nTotal unique bogies: " + bogieIds.size());
-
-        System.out.println("\nProgram execution completed.");
+        System.out.println("\nTotal bogies remaining: " + train.size());
     }
 }
