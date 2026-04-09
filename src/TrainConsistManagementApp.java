@@ -1,6 +1,4 @@
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 // Bogie class
@@ -27,49 +25,35 @@ class Bogie {
     }
 }
 
-// Main application class
+// Main class
 public class TrainConsistManagementApp {
 
     public static void main(String[] args) {
 
         System.out.println("=== Train Consist Management App ===");
 
-        // Create list
         List<Bogie> passengerBogies = new ArrayList<>();
 
-        // Add bogies
         passengerBogies.add(new Bogie("Sleeper", 72));
         passengerBogies.add(new Bogie("AC Chair", 56));
         passengerBogies.add(new Bogie("First Class", 24));
+        passengerBogies.add(new Bogie("Sleeper", 80)); // duplicate type
+        passengerBogies.add(new Bogie("AC Chair", 60));
 
-        // ================= UC7 =================
-        System.out.println("\n=== UC7: Sorting Passenger Bogies by Capacity ===");
+        // ================= UC9 =================
+        System.out.println("\n=== UC9: Group Bogies by Type ===");
 
-        System.out.println("\nBefore Sorting:");
-        passengerBogies.forEach(System.out::println);
+        Map<String, List<Bogie>> groupedBogies = passengerBogies.stream()
+                .collect(Collectors.groupingBy(Bogie::getName));
 
-        passengerBogies.sort(Comparator.comparingInt(Bogie::getCapacity));
-
-        System.out.println("\nAfter Sorting:");
-        passengerBogies.forEach(System.out::println);
-
-        // ================= UC8 =================
-        System.out.println("\n=== UC8: Filter Passenger Bogies (Capacity > 60) ===");
-
-        // Stream filtering
-        List<Bogie> filteredBogies = passengerBogies.stream()
-                .filter(b -> b.getCapacity() > 60)
-                .collect(Collectors.toList());
-
-        // Display filtered result
-        if (filteredBogies.isEmpty()) {
-            System.out.println("No bogies match the filter condition.");
-        } else {
-            filteredBogies.forEach(System.out::println);
-        }
+        // Display grouped result
+        groupedBogies.forEach((type, bogies) -> {
+            System.out.println("\nType: " + type);
+            bogies.forEach(System.out::println);
+        });
 
         // Verify original list unchanged
-        System.out.println("\nOriginal List (Unchanged):");
+        System.out.println("\nOriginal List:");
         passengerBogies.forEach(System.out::println);
 
         System.out.println("\nProgram execution completed.");
