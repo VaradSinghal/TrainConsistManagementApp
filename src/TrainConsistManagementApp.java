@@ -1,8 +1,9 @@
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
-// Bogie class defined in the same file
+// Bogie class
 class Bogie {
     private String name;
     private int capacity;
@@ -32,30 +33,44 @@ public class TrainConsistManagementApp {
     public static void main(String[] args) {
 
         System.out.println("=== Train Consist Management App ===");
-        System.out.println("\n=== UC7: Sorting Passenger Bogies by Capacity ===");
 
-        // Create list to store bogie objects
+        // Create list
         List<Bogie> passengerBogies = new ArrayList<>();
 
-        // Add passenger bogies
+        // Add bogies
         passengerBogies.add(new Bogie("Sleeper", 72));
         passengerBogies.add(new Bogie("AC Chair", 56));
         passengerBogies.add(new Bogie("First Class", 24));
 
-        // Display before sorting
-        System.out.println("\nBefore Sorting:");
-        for (Bogie b : passengerBogies) {
-            System.out.println(b);
-        }
+        // ================= UC7 =================
+        System.out.println("\n=== UC7: Sorting Passenger Bogies by Capacity ===");
 
-        // Sort bogies using Comparator based on capacity
+        System.out.println("\nBefore Sorting:");
+        passengerBogies.forEach(System.out::println);
+
         passengerBogies.sort(Comparator.comparingInt(Bogie::getCapacity));
 
-        // Display after sorting
-        System.out.println("\nAfter Sorting by Capacity (Ascending):");
-        for (Bogie b : passengerBogies) {
-            System.out.println(b);
+        System.out.println("\nAfter Sorting:");
+        passengerBogies.forEach(System.out::println);
+
+        // ================= UC8 =================
+        System.out.println("\n=== UC8: Filter Passenger Bogies (Capacity > 60) ===");
+
+        // Stream filtering
+        List<Bogie> filteredBogies = passengerBogies.stream()
+                .filter(b -> b.getCapacity() > 60)
+                .collect(Collectors.toList());
+
+        // Display filtered result
+        if (filteredBogies.isEmpty()) {
+            System.out.println("No bogies match the filter condition.");
+        } else {
+            filteredBogies.forEach(System.out::println);
         }
+
+        // Verify original list unchanged
+        System.out.println("\nOriginal List (Unchanged):");
+        passengerBogies.forEach(System.out::println);
 
         System.out.println("\nProgram execution completed.");
     }
