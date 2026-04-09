@@ -1,27 +1,28 @@
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
-// Bogie class
-class Bogie {
-    private String name;
-    private int capacity;
+// Utility class for validation
+class Validator {
 
-    public Bogie(String name, int capacity) {
-        this.name = name;
-        this.capacity = capacity;
+    // Regex patterns
+    private static final String TRAIN_ID_REGEX = "TRN-\\d{4}";
+    private static final String CARGO_CODE_REGEX = "PET-[A-Z]{2}";
+
+    private static final Pattern trainPattern = Pattern.compile(TRAIN_ID_REGEX);
+    private static final Pattern cargoPattern = Pattern.compile(CARGO_CODE_REGEX);
+
+    // Validate Train ID
+    public static boolean isValidTrainId(String trainId) {
+        if (trainId == null) return false;
+        Matcher matcher = trainPattern.matcher(trainId);
+        return matcher.matches();
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public int getCapacity() {
-        return capacity;
-    }
-
-    @Override
-    public String toString() {
-        return name + " (Capacity: " + capacity + ")";
+    // Validate Cargo Code
+    public static boolean isValidCargoCode(String cargoCode) {
+        if (cargoCode == null) return false;
+        Matcher matcher = cargoPattern.matcher(cargoCode);
+        return matcher.matches();
     }
 }
 
@@ -31,26 +32,17 @@ public class TrainConsistManagementApp {
     public static void main(String[] args) {
 
         System.out.println("=== Train Consist Management App ===");
+        System.out.println("\n=== UC11: Validate Train ID & Cargo Code ===");
 
-        List<Bogie> passengerBogies = new ArrayList<>();
+        // Sample inputs (you can replace with Scanner input)
+        String trainId = "TRN-1234";
+        String cargoCode = "PET-AB";
 
-        passengerBogies.add(new Bogie("Sleeper", 72));
-        passengerBogies.add(new Bogie("AC Chair", 56));
-        passengerBogies.add(new Bogie("First Class", 24));
-        passengerBogies.add(new Bogie("Sleeper", 80));
+        boolean isTrainValid = Validator.isValidTrainId(trainId);
+        boolean isCargoValid = Validator.isValidCargoCode(cargoCode);
 
-        // ================= UC10 =================
-        System.out.println("\n=== UC10: Total Seating Capacity ===");
-
-        int totalCapacity = passengerBogies.stream()
-                .map(Bogie::getCapacity)   // extract capacity
-                .reduce(0, Integer::sum); // sum all values
-
-        System.out.println("Total Seating Capacity: " + totalCapacity);
-
-        // Verify original list unchanged
-        System.out.println("\nOriginal List:");
-        passengerBogies.forEach(System.out::println);
+        System.out.println("Train ID: " + trainId + " -> " + (isTrainValid ? "Valid" : "Invalid"));
+        System.out.println("Cargo Code: " + cargoCode + " -> " + (isCargoValid ? "Valid" : "Invalid"));
 
         System.out.println("\nProgram execution completed.");
     }
