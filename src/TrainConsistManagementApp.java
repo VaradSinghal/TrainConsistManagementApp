@@ -37,20 +37,16 @@ public class TrainConsistManagementApp {
         passengerBogies.add(new Bogie("Sleeper", 72));
         passengerBogies.add(new Bogie("AC Chair", 56));
         passengerBogies.add(new Bogie("First Class", 24));
-        passengerBogies.add(new Bogie("Sleeper", 80)); // duplicate type
-        passengerBogies.add(new Bogie("AC Chair", 60));
+        passengerBogies.add(new Bogie("Sleeper", 80));
 
-        // ================= UC9 =================
-        System.out.println("\n=== UC9: Group Bogies by Type ===");
+        // ================= UC10 =================
+        System.out.println("\n=== UC10: Total Seating Capacity ===");
 
-        Map<String, List<Bogie>> groupedBogies = passengerBogies.stream()
-                .collect(Collectors.groupingBy(Bogie::getName));
+        int totalCapacity = passengerBogies.stream()
+                .map(Bogie::getCapacity)   // extract capacity
+                .reduce(0, Integer::sum); // sum all values
 
-        // Display grouped result
-        groupedBogies.forEach((type, bogies) -> {
-            System.out.println("\nType: " + type);
-            bogies.forEach(System.out::println);
-        });
+        System.out.println("Total Seating Capacity: " + totalCapacity);
 
         // Verify original list unchanged
         System.out.println("\nOriginal List:");
